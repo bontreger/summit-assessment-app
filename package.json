@@ -1,0 +1,38 @@
+{
+  "name": "summit-assessment-app",
+  "version": "1.0.0",
+  "private": true,
+  "description": "An application for assessing customer automation maturity quickly",
+  "scripts": {
+    "dev": "concurrently -n client,server -c cyan,green \"vite\" \"tsx watch server/index.ts\"",
+    "build": "vite build && tsc -p tsconfig.server.json",
+    "start": "node dist-server/index.js",
+    "preview": "vite preview"
+  },
+  "license": "GPL-3.0",
+  "dependencies": {
+    "@patternfly/patternfly": "^6.4.0",
+    "@patternfly/react-core": "^6.4.1",
+    "@patternfly/react-icons": "^6.4.0",
+    "chart.js": "^4.5.1",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "nodemailer": "^8.0.4",
+    "react": "^19.2.4",
+    "react-chartjs-2": "^5.3.1",
+    "react-dom": "^19.2.4",
+    "react-router-dom": "^7.13.2"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/nodemailer": "^7.0.11",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "concurrently": "^9.2.1",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.2",
+    "vite": "^8.0.3"
+  }
+}
