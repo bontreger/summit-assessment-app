@@ -35,6 +35,7 @@ import {
   isAssessmentComplete,
 } from '../utils/scoring';
 import { EmailReportModal } from './EmailReportModal';
+import { buildReportHtml } from '../utils/reportTemplate';
 
 ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend);
 
@@ -53,7 +54,6 @@ export function ResultsPage() {
   const { developerMode } = useSettings();
   const [emailModalOpen, setEmailModalOpen] = useState(false);
   const [previewHtml, setPreviewHtml] = useState<string | null>(null);
-  const [previewLoading, setPreviewLoading] = useState(false);
 
   const assessment = assessmentId ? getAssessmentById(assessmentId) : undefined;
 
@@ -121,22 +121,8 @@ export function ResultsPage() {
     navigate(`/assessments/${assessment.id}`);
   };
 
-  const handlePreviewEmail = async () => {
-    setPreviewLoading(true);
-    try {
-      const res = await fetch('/api/preview-report', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          assessmentTitle: assessment.title,
-          domainScores,
-        }),
-      });
-      const data = await res.json();
-      setPreviewHtml(data.html);
-    } finally {
-      setPreviewLoading(false);
-    }
+  const handlePreviewEmail = () => {
+    setPreviewHtml(buildReportHtml(assessment.title, domainScores));
   };
 
   return (
@@ -204,12 +190,7 @@ export function ResultsPage() {
             Back to Questions
           </Button>
           {developerMode && (
-            <Button
-              variant="tertiary"
-              onClick={handlePreviewEmail}
-              isLoading={previewLoading}
-              isDisabled={previewLoading}
-            >
+            <Button variant="tertiary" onClick={handlePreviewEmail}>
               Preview Email
             </Button>
           )}
