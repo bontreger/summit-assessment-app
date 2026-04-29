@@ -6,45 +6,45 @@ interface DomainResult {
 }
 
 const ADVANCEMENT: Record<string, Record<string, string[]>> = {
-  productUsage: {
-    Initial: ['Conduct a Getting Started with AAP workshop', 'Identify initial automation use cases', 'Inventory existing ad hoc scripts and tools'],
-    Developing: ['Expand standardization of automation tools', 'Enable shared content repositories', 'Develop internal automation champions'],
-    Operational: ['Integrate self-service automation portals', 'Expand cross-team adoption', 'Implement integration accelerators across domains'],
-    Optimizing: ['Adopt Event-Driven Automation (EDA)', 'Leverage SaaS-based automation services for scalability', 'Expand cross-domain governance'],
-    Innovator: ['Implement AI-driven workflows and predictive automation', 'Manage multi-cluster environments', 'Continuously refine enterprise-wide governance'],
+  governance: {
+    'Level 1': ['Establish RBAC configuration for automation platform', 'Define basic automation organizational structure', 'Document initial release management process'],
+    'Level 2': ['Stand up a Community of Practice or Center of Excellence', 'Implement multi-team release pipelines', 'Streamline automation hub usage across teams'],
+    'Level 3': ['Develop responsive automation governance policies', 'Integrate governance with organizational change management', 'Automate policy compliance checks in release pipelines'],
+    'Level 4': ['Implement AI-based governance policy recommendations', 'Automate release validation and deployment', 'Establish continuous governance optimization'],
+    'Level 5': ['Continuously refine AI governance models', 'Share governance best practices across the industry', 'Drive innovation in automated policy management'],
   },
-  performance: {
-    Initial: ['Define basic KPIs for automation tasks', 'Run a Quick Win program to demonstrate value', 'Establish baseline metrics'],
-    Developing: ['Track KPIs systematically', 'Establish performance baselines', 'Implement telemetry and monitoring'],
-    Operational: ['Improve cost savings analysis', 'Introduce business-aligned KPIs', 'Build executive-facing dashboards'],
-    Optimizing: ['Implement Policy-as-Code (PaC) for compliance', 'Deploy SLA-driven automation governance', 'Integrate compliance tracking end-to-end'],
-    Innovator: ['Optimize with AI-driven insights', 'Implement continuous performance benchmarking', 'Drive data-driven decision-making across systems'],
+  platform: {
+    'Level 1': ['Separate dev and prod environments', 'Plan for initial platform sizing', 'Establish basic backup procedures'],
+    'Level 2': ['Optimize production sizing and HA configuration', 'Implement offsite resiliency', 'Enable advanced platform features'],
+    'Level 3': ['Implement and test DR/multisite deployment', 'Enforce configuration consistency across environments', 'Establish automated drift detection'],
+    'Level 4': ['Deploy AIOps for platform management', 'Implement automated policy enforcement', 'Enable predictive failure analysis'],
+    'Level 5': ['Continuously optimize AIOps models', 'Drive self-healing platform capabilities', 'Pioneer automated platform lifecycle management'],
   },
-  proficiency: {
-    Initial: ['Complete Ansible Basics Training', 'Create onboarding materials for automation', 'Identify initial champions within teams'],
-    Developing: ['Expand use cases with Ansible Interactive Labs', 'Enable a cross-functional automation committee', 'Document tribal knowledge'],
-    Operational: ['Develop internal champions into a formal network', 'Encourage peer-led enablement sessions', 'Conduct scaling assessments'],
-    Optimizing: ['Expand developer tooling (IDE, DevSandbox, Backstage)', 'Support automation engineers with advanced toolchains', 'Formalize certification paths'],
-    Innovator: ['Maintain comprehensive expertise across all domains', 'Contribute to industry best practices', 'Support advanced training and mentorship programs'],
+  devopsSkills: {
+    'Level 1': ['Create repository templates for automation content', 'Establish basic quality gate pipelines', 'Develop initial onboarding materials'],
+    'Level 2': ['Expand pipelines with test automation', 'Stand up centralized developer environments', 'Launch structured team onboarding programs'],
+    'Level 3': ['Implement OpsEx configuration as code', 'Integrate AI code assistance into developer tooling', 'Formalize certification paths for automation engineers'],
+    'Level 4': ['Deploy AI-driven DevEx and OpsEx management', 'Automate content lifecycle testing and deployment', 'Establish self-sustaining expertise programs'],
+    'Level 5': ['Continuously refine AI-driven developer experience', 'Contribute to industry automation practices', 'Drive innovation in automated skills development'],
   },
-  perception: {
-    Initial: ['Conduct awareness sessions for leadership', 'Communicate early wins broadly', 'Address complexity concerns with demos'],
-    Developing: ['Foster internal advocacy across teams', 'Demonstrate quantified value to executives', 'Secure executive sponsorship'],
-    Operational: ['Position automation as a critical business enabler', 'Run adoption hackathons or innovation days', 'Integrate automation goals into team OKRs'],
-    Optimizing: ['Align automation strategy with business goals', 'Showcase customer references and case studies', 'Build an internal automation brand'],
-    Innovator: ['Contribute to open-source community', 'Advocate externally through conferences and publications', 'Shape industry best practices'],
+  useCases: {
+    'Level 1': ['Identify automation use cases within a single domain', 'Implement foundational automation for a specific area', 'Document use case patterns for reuse'],
+    'Level 2': ['Connect automation use cases to ITSM and service catalogs', 'Expand automation across multiple enterprise domains', 'Implement self-service automation portals'],
+    'Level 3': ['Deploy Event-Driven Ansible for automated operations', 'Connect automation to measurable business outcomes', 'Implement cross-domain event response patterns'],
+    'Level 4': ['Implement AI-driven use cases for self-managed infrastructure', 'Deploy self-healing automation patterns', 'Establish predictive remediation workflows'],
+    'Level 5': ['Continuously expand AI-driven autonomous operations', 'Pioneer next-generation automation patterns', 'Drive industry standards for intelligent automation'],
   },
 };
 
-const MATURITY_COLORS: Record<string, string> = {
-  Initial: '#c9190b',
-  Developing: '#f0ab00',
-  Operational: '#06c',
-  Optimizing: '#5752d1',
-  Innovator: '#3e8635',
+const LEVEL_COLORS: Record<string, string> = {
+  'Level 1': '#c9190b',
+  'Level 2': '#f0ab00',
+  'Level 3': '#06c',
+  'Level 4': '#5752d1',
+  'Level 5': '#3e8635',
 };
 
-const LEVEL_HEADERS = ['1 \u2014 Initial', '2 \u2014 Developing', '3 \u2014 Operational', '4 \u2014 Optimizing', '5 \u2014 Innovator'];
+const LEVEL_HEADERS = ['1', '2', '3', '4', '5'];
 
 interface MatrixThread {
   name: string;
@@ -57,32 +57,32 @@ interface MatrixDomain {
 }
 
 const SCORING_MATRIX: Record<string, MatrixDomain> = {
-  productUsage: {
-    domainLabel: 'Product Usage',
+  governance: {
+    domainLabel: 'Governance and Strategy',
     threads: [
-      { name: 'Team Adoption', cells: ['Siloed, ad hoc per team', 'Adoption within individual teams', 'Cross-team adoption, self-service', 'Cross-domain adoption', null] },
-      { name: 'Governance & Standardization', cells: [null, 'Initial standardization, early reuse', 'Shared platform with CI/CD', 'Policy-driven, governed across domains', 'Enterprise-wide standardization'] },
-      { name: 'Differentiator', cells: ['Ungoverned scripts', 'Shared content emerging', 'Integrated CI/CD pipelines', 'AI-driven triggers', 'AI-assisted decision-making'] },
+      { name: 'Organizational Alignment', cells: ['No governance consideration', 'RBAC and structure setup', 'CoP/CoE driving governance', 'Responsive governance policies', 'AI-based governance'] },
+      { name: 'Release Management', cells: ['No release process', 'Basic release management', 'Multi-team release pipelines', 'Policy-driven releases', 'Fully automated releases'] },
     ],
   },
-  performance: {
-    domainLabel: 'Performance',
+  platform: {
+    domainLabel: 'Platform',
     threads: [
-      { name: 'KPIs', cells: ['No KPIs defined', 'Basic KPIs (% automated, speed)', 'KPIs tracked, cost savings', 'SLA-driven, business KPIs', 'Continuous optimization, data-driven'] },
-      { name: 'Differentiator', cells: ['No measurement', 'Informal time savings', 'Documented evidence', 'Compliance tracking', 'Predictive impact modeling'] },
+      { name: 'Architecture', cells: ['Single instance, no separation', 'Dev/prod separated', 'Production grade, optimized', 'Mission critical DR/multisite', 'AIOps-managed platform'] },
+      { name: 'Resilience', cells: ['No HA or DR', 'Basic separation only', 'Offsite resiliency', 'Tested DR, drift enforcement', 'Self-healing, predictive'] },
     ],
   },
-  proficiency: {
-    domainLabel: 'Proficiency',
+  devopsSkills: {
+    domainLabel: 'DevEx, OpsEx and Skills',
     threads: [
-      { name: 'Knowledge Sharing', cells: ['Reliance on few experts', 'Internal knowledge sharing starting', 'Champions established, peer support', 'CoE / CoP formalized', 'Distributed expertise, self-sustaining'] },
-      { name: 'Team Onboarding', cells: ['No formal training', 'Structured onboarding, foundational skills', 'Internal enablement programs', 'Governed adoption model', 'Certified across all domains'] },
+      { name: 'Developer Experience', cells: ['Not considered', 'Repo templates, basic pipelines', 'Centralized dev environments', 'AI code assistance, config as code', 'AI-managed DevEx/OpsEx'] },
+      { name: 'Team Onboarding', cells: ['No formal onboarding', 'Basic training resources', 'Structured onboarding programs', 'Certification paths, AI learning', 'Self-sustaining expertise'] },
     ],
   },
-  perception: {
-    domainLabel: 'Perception',
+  useCases: {
+    domainLabel: 'Use Cases',
     threads: [
-      { name: '', cells: ['Experimental, complexity concerns', 'Early wins, tactical buy-in', 'Critical, strong advocacy', 'Executive sponsorship, business alignment', 'Strategic enabler, industry best practice'] },
+      { name: 'Scope', cells: ['Individual tasks', 'Single-area automation', 'Enterprise-wide, ITSM connected', 'Event-driven, business outcomes', 'AI-driven self-healing'] },
+      { name: 'Intelligence', cells: ['Manual trigger only', 'Basic event/schedule triggers', 'Cross-domain, self-service', 'EDA, measurable outcomes', 'Autonomous, predictive'] },
     ],
   },
 };
@@ -147,7 +147,7 @@ export function buildReportHtml(
 ): string {
   const scoreRows = domainScores
     .map((ds) => {
-      const color = MATURITY_COLORS[ds.maturityLevel] || '#6a6e73';
+      const color = LEVEL_COLORS[ds.maturityLevel] || '#6a6e73';
       const actions = ADVANCEMENT[ds.domain]?.[ds.maturityLevel] ?? [];
       const actionList = actions.length
         ? `<ul style="margin:4px 0 0 16px;padding:0">${actions.map((a) => `<li style="font-size:13px">${a}</li>`).join('')}</ul>`

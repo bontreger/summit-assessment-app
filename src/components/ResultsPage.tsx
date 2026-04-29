@@ -40,11 +40,11 @@ import { buildReportHtml } from '../utils/reportTemplate';
 ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend);
 
 const MATURITY_COLORS: Record<string, string> = {
-  Initial: '#c9190b',
-  Developing: '#f0ab00',
-  Operational: '#06c',
-  Optimizing: '#5752d1',
-  Innovator: '#3e8635',
+  'Level 1': '#c9190b',
+  'Level 2': '#f0ab00',
+  'Level 3': '#06c',
+  'Level 4': '#5752d1',
+  'Level 5': '#3e8635',
 };
 
 export function ResultsPage() {

@@ -1,15 +1,15 @@
 import type { Answers, Assessment, DomainKey, DomainScore } from '../types';
 
 const MATURITY_LABELS: [number, string][] = [
-  [1, 'Initial'],
-  [2, 'Developing'],
-  [3, 'Operational'],
-  [4, 'Optimizing'],
-  [5, 'Innovator'],
+  [1, 'Level 1'],
+  [2, 'Level 2'],
+  [3, 'Level 3'],
+  [4, 'Level 4'],
+  [5, 'Level 5'],
 ];
 
 export function getMaturityLabel(score: number): string {
-  let label = 'Initial';
+  let label = 'Level 1';
   for (const [threshold, l] of MATURITY_LABELS) {
     if (score >= threshold) label = l;
   }
@@ -21,20 +21,15 @@ export function computeDomainScores(
   answers: Answers,
 ): DomainScore[] {
   return assessment.domains.map(({ key, label }) => {
-    let weightedSum = 0;
-    let totalWeight = 0;
+    const domainQuestions = assessment.questions.filter((q) => q.domain === key);
+    const answered = domainQuestions.filter((q) => answers[q.id] != null);
 
-    for (const q of assessment.questions) {
-      const w = assessment.domainWeights[q.id]?.[key] ?? 0;
-      if (w > 0 && answers[q.id] != null) {
-        weightedSum += answers[q.id] * w;
-        totalWeight += w;
-      }
-    }
+    const rawAvg =
+      answered.length > 0
+        ? answered.reduce((sum, q) => sum + answers[q.id], 0) / answered.length
+        : 0;
 
-    const score = totalWeight > 0
-      ? Math.round((weightedSum / totalWeight) * 10) / 10
-      : 0;
+    const score = Math.round(rawAvg * 10) / 10;
 
     return {
       domain: key,

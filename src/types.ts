@@ -1,6 +1,4 @@
-export type DomainKey = 'productUsage' | 'performance' | 'proficiency' | 'perception';
-
-export type DomainWeights = Partial<Record<DomainKey, number>>;
+export type DomainKey = 'governance' | 'platform' | 'devopsSkills' | 'useCases';
 
 export interface LevelDescriptor {
   score: number;
@@ -10,6 +8,7 @@ export interface LevelDescriptor {
 
 export interface Question {
   id: string;
+  domain: DomainKey;
   title: string;
   prompt: string;
   levelDescriptors: LevelDescriptor[];
@@ -18,7 +17,6 @@ export interface Question {
 export interface DomainMeta {
   key: DomainKey;
   label: string;
-  pptDimension: string;
 }
 
 export interface AdvancementAction {
@@ -50,8 +48,6 @@ export interface Assessment {
   description: string;
   domains: DomainMeta[];
   questions: Question[];
-  /** questionId -> { productUsage: 1.0, performance: 0.5, ... } */
-  domainWeights: Record<string, DomainWeights>;
   scoringMatrix: Record<DomainKey, DomainScoringMatrix>;
   advancement: DomainAdvancement[];
 }

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import {
+  Button,
   Masthead,
   MastheadBrand,
   MastheadContent,
@@ -16,7 +17,10 @@ import {
 } from '@patternfly/react-core';
 import BarsIcon from '@patternfly/react-icons/dist/esm/icons/bars-icon';
 import CogIcon from '@patternfly/react-icons/dist/esm/icons/cog-icon';
+import SunIcon from '@patternfly/react-icons/dist/esm/icons/sun-icon';
+import MoonIcon from '@patternfly/react-icons/dist/esm/icons/moon-icon';
 import { getAssessments } from '../data/assessment-registry';
+import { useSettings } from '../context/SettingsContext';
 
 export function AppLayout() {
   const navigate = useNavigate();
@@ -24,6 +28,7 @@ export function AppLayout() {
   const { assessmentId } = useParams();
   const [isSidebarOpen, setSidebarOpen] = useState(true);
   const assessments = getAssessments();
+  const { darkMode, toggleDarkMode } = useSettings();
 
   const masthead = (
     <Masthead>
@@ -47,7 +52,16 @@ export function AppLayout() {
           </span>
         </MastheadBrand>
       </MastheadMain>
-      <MastheadContent>&nbsp;</MastheadContent>
+      <MastheadContent>
+        <Button
+          variant="plain"
+          aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+          onClick={toggleDarkMode}
+          style={{ color: '#fff' }}
+        >
+          {darkMode ? <SunIcon /> : <MoonIcon />}
+        </Button>
+      </MastheadContent>
     </Masthead>
   );
 
