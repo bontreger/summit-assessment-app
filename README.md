@@ -1,4 +1,4 @@
-# TDP Assessments — Summit Assessment App
+# Ansible Services — Summit Assessment App
 
 A web application for assessing customer automation maturity across four domains: **Product Usage**, **Performance**, **Proficiency**, and **Perception**.
 
