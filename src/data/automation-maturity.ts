@@ -21,11 +21,11 @@ export const automationMaturity: Assessment = {
       prompt:
         'How is automation governed in your organization? Consider RBAC, organizational structure, policies, and decision-making around automation strategy.',
       levelDescriptors: [
-        { score: 1, label: 'No Considered Governance', description: 'No consideration of organizational governance for automation; teams operate independently without coordination.' },
-        { score: 2, label: 'Basic Governance', description: 'RBAC is configured; basic automation structure and organizational alignment are in place.' },
-        { score: 3, label: 'Scaled Governance', description: 'A Community of Practice or Center of Excellence drives governance; streamlined hub usage across multiple teams.' },
-        { score: 4, label: 'Advanced Governance', description: 'Responsive automation governance policies adapt to organizational needs; governance is proactive rather than reactive.' },
-        { score: 5, label: 'Fully Automated Governance', description: 'AI-based automation governance policies continuously optimize organizational alignment and compliance.' },
+        { score: 1, label: 'Initial', description: 'No consideration of organizational governance for automation; teams operate independently without coordination.' },
+        { score: 2, label: 'Developing', description: 'RBAC is configured; basic automation structure and organizational alignment are in place.' },
+        { score: 3, label: 'Operational', description: 'A Community of Practice or Center of Excellence drives governance; streamlined hub usage across multiple teams.' },
+        { score: 4, label: 'Optimizing', description: 'Responsive automation governance policies adapt to organizational needs; governance is proactive rather than reactive.' },
+        { score: 5, label: 'Innovator', description: 'AI-based automation governance policies continuously optimize organizational alignment and compliance.' },
       ],
     },
     {
@@ -35,11 +35,11 @@ export const automationMaturity: Assessment = {
       prompt:
         'How are automation content releases managed? Think about version control, promotion pipelines, approval workflows, and release cadence.',
       levelDescriptors: [
-        { score: 1, label: 'No Considered Governance', description: 'No release management process; changes are ad hoc with no version control or approval workflow.' },
-        { score: 2, label: 'Basic Governance', description: 'Basic release management is in place with version control and a defined promotion path.' },
-        { score: 3, label: 'Scaled Governance', description: 'Multi-team release pipelines are established; releases follow a consistent cadence with peer review.' },
-        { score: 4, label: 'Advanced Governance', description: 'Release pipelines are policy-driven with automated quality gates and compliance checks.' },
-        { score: 5, label: 'Fully Automated Governance', description: 'Fully automated releases with AI-driven validation, rollback, and continuous delivery.' },
+        { score: 1, label: 'Initial', description: 'No release management process; changes are ad hoc with no version control or approval workflow.' },
+        { score: 2, label: 'Developing', description: 'Basic release management is in place with version control and a defined promotion path.' },
+        { score: 3, label: 'Operational', description: 'Multi-team release pipelines are established; releases follow a consistent cadence with peer review.' },
+        { score: 4, label: 'Optimizing', description: 'Release pipelines are policy-driven with automated quality gates and compliance checks.' },
+        { score: 5, label: 'Innovator', description: 'Fully automated releases with AI-driven validation, rollback, and continuous delivery.' },
       ],
     },
 
@@ -51,11 +51,11 @@ export const automationMaturity: Assessment = {
       prompt:
         'How is your Ansible Automation Platform deployed? Consider environment separation, sizing, high availability, and management approach.',
       levelDescriptors: [
-        { score: 1, label: 'Single Instance', description: 'Single instance with no dev/prod separation; automation runs in a single shared environment.' },
-        { score: 2, label: 'Basic Productive AAP', description: 'Dev and prod environments are separated, but the platform is not sized for production load or configured for HA.' },
-        { score: 3, label: 'Production Grade', description: 'Production sizing is optimized with offsite resiliency; advanced platform features are enabled and actively used.' },
-        { score: 4, label: 'Mission Critical', description: 'Tested DR/multisite implementation with configuration consistency enforcement across all environments.' },
-        { score: 5, label: 'Automated Platform Management', description: 'AIOps and AAP manage the platform with automated policy enforcement, scaling, and self-optimization.' },
+        { score: 1, label: 'Initial', description: 'Single instance with no dev/prod separation; automation runs in a single shared environment.' },
+        { score: 2, label: 'Developing', description: 'Dev and prod environments are separated, but the platform is not sized for production load or configured for HA.' },
+        { score: 3, label: 'Operational', description: 'Production sizing is optimized with offsite resiliency; advanced platform features are enabled and actively used.' },
+        { score: 4, label: 'Optimizing', description: 'Tested DR/multisite implementation with configuration consistency enforcement across all environments.' },
+        { score: 5, label: 'Innovator', description: 'AIOps and AAP manage the platform with automated policy enforcement, scaling, and self-optimization.' },
       ],
     },
     {
@@ -65,11 +65,11 @@ export const automationMaturity: Assessment = {
       prompt:
         'How do you manage the lifecycle of your automation platform? Think about upgrades, patching, disaster recovery, and configuration drift.',
       levelDescriptors: [
-        { score: 1, label: 'Single Instance', description: 'No lifecycle management; upgrades and patching are reactive and unplanned.' },
-        { score: 2, label: 'Basic Productive AAP', description: 'Basic lifecycle processes exist; upgrades are planned but DR is not tested.' },
-        { score: 3, label: 'Production Grade', description: 'Lifecycle management includes scheduled upgrades, backup strategies, and documented recovery procedures.' },
-        { score: 4, label: 'Mission Critical', description: 'DR is tested regularly; configuration consistency is enforced across sites with automated drift detection.' },
-        { score: 5, label: 'Automated Platform Management', description: 'Platform lifecycle is fully automated with AI-driven maintenance windows, predictive failure analysis, and self-healing.' },
+        { score: 1, label: 'Initial', description: 'No lifecycle management; upgrades and patching are reactive and unplanned.' },
+        { score: 2, label: 'Developing', description: 'Basic lifecycle processes exist; upgrades are planned but DR is not tested.' },
+        { score: 3, label: 'Operational', description: 'Lifecycle management includes scheduled upgrades, backup strategies, and documented recovery procedures.' },
+        { score: 4, label: 'Optimizing', description: 'DR is tested regularly; configuration consistency is enforced across sites with automated drift detection.' },
+        { score: 5, label: 'Innovator', description: 'Platform lifecycle is fully automated with AI-driven maintenance windows, predictive failure analysis, and self-healing.' },
       ],
     },
 
@@ -81,11 +81,11 @@ export const automationMaturity: Assessment = {
       prompt:
         'What does the automation developer and operator experience look like? Consider development environments, tooling, AI assistance, and day-to-day workflows.',
       levelDescriptors: [
-        { score: 1, label: 'Not Considered', description: 'DevEx and OpsEx are not considered; developers work in unstandardized, individually created environments.' },
-        { score: 2, label: 'Basic DevOps Lifecycle', description: 'Repository templates and basic quality gate pipelines are available for developers and operators.' },
-        { score: 3, label: 'Platform and Dev Onboarding', description: 'Pipelines expanded with test automation; centralized developer environments and team onboarding programs are in place.' },
-        { score: 4, label: 'SDLC for Automation Content', description: 'OpsEx configuration as code; AAP platform management with AI; developer experience includes AI code assistance.' },
-        { score: 5, label: 'Automated DevOps Experience', description: 'AI-driven DevEx and OpsEx manages automation content lifecycle, testing, and deployment autonomously.' },
+        { score: 1, label: 'Initial', description: 'DevEx and OpsEx are not considered; developers work in unstandardized, individually created environments.' },
+        { score: 2, label: 'Developing', description: 'Repository templates and basic quality gate pipelines are available for developers and operators.' },
+        { score: 3, label: 'Operational', description: 'Pipelines expanded with test automation; centralized developer environments and team onboarding programs are in place.' },
+        { score: 4, label: 'Optimizing', description: 'OpsEx configuration as code; AAP platform management with AI; developer experience includes AI code assistance.' },
+        { score: 5, label: 'Innovator', description: 'AI-driven DevEx and OpsEx manages automation content lifecycle, testing, and deployment autonomously.' },
       ],
     },
     {
@@ -95,11 +95,11 @@ export const automationMaturity: Assessment = {
       prompt:
         'How do new team members learn your automation practices? Is there structured onboarding, training programs, or certification paths?',
       levelDescriptors: [
-        { score: 1, label: 'Not Considered', description: 'No formal onboarding or skills development; new team members learn through trial and error.' },
-        { score: 2, label: 'Basic DevOps Lifecycle', description: 'Basic onboarding materials exist; teams have access to foundational training resources.' },
-        { score: 3, label: 'Platform and Dev Onboarding', description: 'Structured team onboarding programs are established; enablement sessions and sandbox environments are available.' },
-        { score: 4, label: 'SDLC for Automation Content', description: 'Comprehensive skills development with certification paths; AI-assisted learning and code review accelerate onboarding.' },
-        { score: 5, label: 'Automated DevOps Experience', description: 'AI-driven personalized onboarding and continuous skills development; expertise is self-sustaining across all teams.' },
+        { score: 1, label: 'Initial', description: 'No formal onboarding or skills development; new team members learn through trial and error.' },
+        { score: 2, label: 'Developing', description: 'Basic onboarding materials exist; teams have access to foundational training resources.' },
+        { score: 3, label: 'Operational', description: 'Structured team onboarding programs are established; enablement sessions and sandbox environments are available.' },
+        { score: 4, label: 'Optimizing', description: 'Comprehensive skills development with certification paths; AI-assisted learning and code review accelerate onboarding.' },
+        { score: 5, label: 'Innovator', description: 'AI-driven personalized onboarding and continuous skills development; expertise is self-sustaining across all teams.' },
       ],
     },
 
@@ -111,11 +111,11 @@ export const automationMaturity: Assessment = {
       prompt:
         'What types of automation use cases has your organization implemented? Consider breadth across domains, integration with enterprise systems, and business alignment.',
       levelDescriptors: [
-        { score: 1, label: 'Individual Tasks', description: 'Individual task creation; automation is limited to isolated, one-off scripts and tasks.' },
-        { score: 2, label: 'Stream-Aligned', description: 'Automation of single-area use cases or implementations within a specific domain or team.' },
-        { score: 3, label: 'Enterprise-Wide', description: 'Enterprise-wide automation use cases connected to other enterprise products like ITSM and service catalogs.' },
-        { score: 4, label: 'Responsive / Advanced', description: 'Automated operations using Event-Driven Ansible; automation is connected to support business outcomes.' },
-        { score: 5, label: 'Next-Gen', description: 'AI-driven use cases including self-managed and self-healing infrastructure.' },
+        { score: 1, label: 'Initial', description: 'Individual task creation; automation is limited to isolated, one-off scripts and tasks.' },
+        { score: 2, label: 'Developing', description: 'Automation of single-area use cases or implementations within a specific domain or team.' },
+        { score: 3, label: 'Operational', description: 'Enterprise-wide automation use cases connected to other enterprise products like ITSM and service catalogs.' },
+        { score: 4, label: 'Optimizing', description: 'Automated operations using Event-Driven Ansible; automation is connected to support business outcomes.' },
+        { score: 5, label: 'Innovator', description: 'AI-driven use cases including self-managed and self-healing infrastructure.' },
       ],
     },
     {
@@ -125,11 +125,11 @@ export const automationMaturity: Assessment = {
       prompt:
         'How advanced are your automation patterns? Think about event-driven automation, self-service, integration depth, and AI-assisted operations.',
       levelDescriptors: [
-        { score: 1, label: 'Individual Tasks', description: 'Automation is purely manual-trigger, task-level execution with no event integration.' },
-        { score: 2, label: 'Stream-Aligned', description: 'Some automation is triggered by basic events or schedules within a single domain.' },
-        { score: 3, label: 'Enterprise-Wide', description: 'Cross-domain integration with self-service portals; automation responds to enterprise events and service requests.' },
-        { score: 4, label: 'Responsive / Advanced', description: 'Event-Driven Ansible responds to infrastructure and application events; automation drives measurable business outcomes.' },
-        { score: 5, label: 'Next-Gen', description: 'AI-driven autonomous operations with predictive remediation and self-healing infrastructure patterns.' },
+        { score: 1, label: 'Initial', description: 'Automation is purely manual-trigger, task-level execution with no event integration.' },
+        { score: 2, label: 'Developing', description: 'Some automation is triggered by basic events or schedules within a single domain.' },
+        { score: 3, label: 'Operational', description: 'Cross-domain integration with self-service portals; automation responds to enterprise events and service requests.' },
+        { score: 4, label: 'Optimizing', description: 'Event-Driven Ansible responds to infrastructure and application events; automation drives measurable business outcomes.' },
+        { score: 5, label: 'Innovator', description: 'AI-driven autonomous operations with predictive remediation and self-healing infrastructure patterns.' },
       ],
     },
   ],

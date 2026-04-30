@@ -1,15 +1,15 @@
 import type { Answers, Assessment, DomainKey, DomainScore } from '../types';
 
 const MATURITY_LABELS: [number, string][] = [
-  [1, 'Level 1'],
-  [2, 'Level 2'],
-  [3, 'Level 3'],
-  [4, 'Level 4'],
-  [5, 'Level 5'],
+  [1, 'Initial'],
+  [2, 'Developing'],
+  [3, 'Operational'],
+  [4, 'Optimizing'],
+  [5, 'Innovator'],
 ];
 
 export function getMaturityLabel(score: number): string {
-  let label = 'Level 1';
+  let label = 'Initial';
   for (const [threshold, l] of MATURITY_LABELS) {
     if (score >= threshold) label = l;
   }

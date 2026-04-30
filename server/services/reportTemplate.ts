@@ -7,41 +7,41 @@ interface DomainResult {
 
 const ADVANCEMENT: Record<string, Record<string, string[]>> = {
   governance: {
-    'Level 1': ['Establish RBAC configuration for automation platform', 'Define basic automation organizational structure', 'Document initial release management process'],
-    'Level 2': ['Stand up a Community of Practice or Center of Excellence', 'Implement multi-team release pipelines', 'Streamline automation hub usage across teams'],
-    'Level 3': ['Develop responsive automation governance policies', 'Integrate governance with organizational change management', 'Automate policy compliance checks in release pipelines'],
-    'Level 4': ['Implement AI-based governance policy recommendations', 'Automate release validation and deployment', 'Establish continuous governance optimization'],
-    'Level 5': ['Continuously refine AI governance models', 'Share governance best practices across the industry', 'Drive innovation in automated policy management'],
+    Initial: ['Establish RBAC configuration for automation platform', 'Define basic automation organizational structure', 'Document initial release management process'],
+    Developing: ['Stand up a Community of Practice or Center of Excellence', 'Implement multi-team release pipelines', 'Streamline automation hub usage across teams'],
+    Operational: ['Develop responsive automation governance policies', 'Integrate governance with organizational change management', 'Automate policy compliance checks in release pipelines'],
+    Optimizing: ['Implement AI-based governance policy recommendations', 'Automate release validation and deployment', 'Establish continuous governance optimization'],
+    Innovator: ['Continuously refine AI governance models', 'Share governance best practices across the industry', 'Drive innovation in automated policy management'],
   },
   platform: {
-    'Level 1': ['Separate dev and prod environments', 'Plan for initial platform sizing', 'Establish basic backup procedures'],
-    'Level 2': ['Optimize production sizing and HA configuration', 'Implement offsite resiliency', 'Enable advanced platform features'],
-    'Level 3': ['Implement and test DR/multisite deployment', 'Enforce configuration consistency across environments', 'Establish automated drift detection'],
-    'Level 4': ['Deploy AIOps for platform management', 'Implement automated policy enforcement', 'Enable predictive failure analysis'],
-    'Level 5': ['Continuously optimize AIOps models', 'Drive self-healing platform capabilities', 'Pioneer automated platform lifecycle management'],
+    Initial: ['Separate dev and prod environments', 'Plan for initial platform sizing', 'Establish basic backup procedures'],
+    Developing: ['Optimize production sizing and HA configuration', 'Implement offsite resiliency', 'Enable advanced platform features'],
+    Operational: ['Implement and test DR/multisite deployment', 'Enforce configuration consistency across environments', 'Establish automated drift detection'],
+    Optimizing: ['Deploy AIOps for platform management', 'Implement automated policy enforcement', 'Enable predictive failure analysis'],
+    Innovator: ['Continuously optimize AIOps models', 'Drive self-healing platform capabilities', 'Pioneer automated platform lifecycle management'],
   },
   devopsSkills: {
-    'Level 1': ['Create repository templates for automation content', 'Establish basic quality gate pipelines', 'Develop initial onboarding materials'],
-    'Level 2': ['Expand pipelines with test automation', 'Stand up centralized developer environments', 'Launch structured team onboarding programs'],
-    'Level 3': ['Implement OpsEx configuration as code', 'Integrate AI code assistance into developer tooling', 'Formalize certification paths for automation engineers'],
-    'Level 4': ['Deploy AI-driven DevEx and OpsEx management', 'Automate content lifecycle testing and deployment', 'Establish self-sustaining expertise programs'],
-    'Level 5': ['Continuously refine AI-driven developer experience', 'Contribute to industry automation practices', 'Drive innovation in automated skills development'],
+    Initial: ['Create repository templates for automation content', 'Establish basic quality gate pipelines', 'Develop initial onboarding materials'],
+    Developing: ['Expand pipelines with test automation', 'Stand up centralized developer environments', 'Launch structured team onboarding programs'],
+    Operational: ['Implement OpsEx configuration as code', 'Integrate AI code assistance into developer tooling', 'Formalize certification paths for automation engineers'],
+    Optimizing: ['Deploy AI-driven DevEx and OpsEx management', 'Automate content lifecycle testing and deployment', 'Establish self-sustaining expertise programs'],
+    Innovator: ['Continuously refine AI-driven developer experience', 'Contribute to industry automation practices', 'Drive innovation in automated skills development'],
   },
   useCases: {
-    'Level 1': ['Identify automation use cases within a single domain', 'Implement foundational automation for a specific area', 'Document use case patterns for reuse'],
-    'Level 2': ['Connect automation use cases to ITSM and service catalogs', 'Expand automation across multiple enterprise domains', 'Implement self-service automation portals'],
-    'Level 3': ['Deploy Event-Driven Ansible for automated operations', 'Connect automation to measurable business outcomes', 'Implement cross-domain event response patterns'],
-    'Level 4': ['Implement AI-driven use cases for self-managed infrastructure', 'Deploy self-healing automation patterns', 'Establish predictive remediation workflows'],
-    'Level 5': ['Continuously expand AI-driven autonomous operations', 'Pioneer next-generation automation patterns', 'Drive industry standards for intelligent automation'],
+    Initial: ['Identify automation use cases within a single domain', 'Implement foundational automation for a specific area', 'Document use case patterns for reuse'],
+    Developing: ['Connect automation use cases to ITSM and service catalogs', 'Expand automation across multiple enterprise domains', 'Implement self-service automation portals'],
+    Operational: ['Deploy Event-Driven Ansible for automated operations', 'Connect automation to measurable business outcomes', 'Implement cross-domain event response patterns'],
+    Optimizing: ['Implement AI-driven use cases for self-managed infrastructure', 'Deploy self-healing automation patterns', 'Establish predictive remediation workflows'],
+    Innovator: ['Continuously expand AI-driven autonomous operations', 'Pioneer next-generation automation patterns', 'Drive industry standards for intelligent automation'],
   },
 };
 
 const LEVEL_COLORS: Record<string, string> = {
-  'Level 1': '#c9190b',
-  'Level 2': '#f0ab00',
-  'Level 3': '#06c',
-  'Level 4': '#5752d1',
-  'Level 5': '#3e8635',
+  Initial: '#c9190b',
+  Developing: '#f0ab00',
+  Operational: '#06c',
+  Optimizing: '#5752d1',
+  Innovator: '#3e8635',
 };
 
 const LEVEL_HEADERS = ['1', '2', '3', '4', '5'];
@@ -177,6 +177,12 @@ export function buildReportHtml(
 <html>
 <head><meta charset="utf-8"></head>
 <body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#333;max-width:720px;margin:0 auto;padding:20px">
+  <p style="font-size:15px;line-height:1.6;color:#333;margin-bottom:24px">
+    Thank you for connecting with us at <strong>Red Hat Summit</strong>! If you have questions about your results
+    or are interested in improving your automation adoption maturity, our consulting team would love to help.
+    <a href="https://www.redhat.com/en/services/consulting" style="color:#06c;text-decoration:none;font-weight:600">Contact Red Hat Consulting &rarr;</a>
+  </p>
+
   <h1 style="color:#151515;border-bottom:3px solid #06c;padding-bottom:12px">${title}</h1>
 
   <h2 style="margin-top:24px">Your Domain Scores</h2>
@@ -200,7 +206,7 @@ export function buildReportHtml(
 
   <hr style="margin:32px 0;border:none;border-top:1px solid #ddd">
   <p style="font-size:12px;color:#888">
-    This report was generated by the TDP Assessments application.
+    This report was generated by the Services Assessments application.
     For questions or to schedule a deeper assessment, contact your Red Hat account team.
   </p>
 </body>

@@ -44,12 +44,12 @@ export function AppLayout() {
           </PageToggleButton>
         </MastheadToggle>
         <MastheadBrand>
-          <span
-            style={{ color: '#fff', fontSize: '1.25rem', fontWeight: 600, cursor: 'pointer' }}
+          <img
+            src={`${import.meta.env.BASE_URL}${darkMode ? 'Logo-Red_Hat-Services-A-Reverse-RGB.svg' : 'Logo-Red_Hat-Services-A-Standard-RGB.svg'}`}
+            alt="Services Assessments"
+            style={{ height: 32, cursor: 'pointer' }}
             onClick={() => navigate('/')}
-          >
-            TDP Assessments
-          </span>
+          />
         </MastheadBrand>
       </MastheadMain>
       <MastheadContent>
