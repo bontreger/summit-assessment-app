@@ -185,6 +185,65 @@ export function ResultsPage() {
       </PageSection>
 
       <PageSection>
+        <Title headingLevel="h2" size="xl" style={{ marginBottom: '1rem' }}>
+          Domain Scores
+        </Title>
+        <table className="scores-table">
+          <thead>
+            <tr>
+              <th>Domain</th>
+              <th>Score</th>
+              <th>Level</th>
+            </tr>
+          </thead>
+          <tbody>
+            {domainScores.map((ds) => (
+              <tr key={ds.domain}>
+                <td>{ds.label}</td>
+                <td style={{ textAlign: 'center' }}>{ds.score} / 5</td>
+                <td>{ds.maturityLevel}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </PageSection>
+
+      <PageSection>
+        <Title headingLevel="h2" size="xl" style={{ marginBottom: '1rem' }}>
+          Advancement Roadmap
+        </Title>
+        <table className="advancement-table">
+          <thead>
+            <tr>
+              <th>Domain</th>
+              <th>Verify Your Foundation</th>
+              <th>Advancement Actions</th>
+              <th>Future Goals</th>
+            </tr>
+          </thead>
+          <tbody>
+            {domainScores.map((ds) => {
+              const levelIdx = Math.max(0, Math.floor(ds.score) - 1);
+              const detail = assessment.advancementDetail[ds.domain as DomainKey]?.[levelIdx];
+              if (!detail) return null;
+              return (
+                <tr key={ds.domain}>
+                  <td className="advancement-domain">{ds.label}</td>
+                  <td>{detail.foundation}</td>
+                  <td>
+                    <ul>
+                      {detail.actions.map((a, i) => <li key={i}>{a}</li>)}
+                    </ul>
+                  </td>
+                  <td className="advancement-goals">{detail.goals}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </PageSection>
+
+      <PageSection>
         <div style={{ display: 'flex', gap: '1rem' }}>
           <Button variant="primary" onClick={() => setEmailModalOpen(true)}>
             Email Report

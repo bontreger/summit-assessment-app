@@ -30,6 +30,12 @@ export interface DomainAdvancement {
   guidance: AdvancementAction[];
 }
 
+export interface AdvancementDetail {
+  foundation: string;
+  actions: string[];
+  goals: string;
+}
+
 export interface ScoringMatrixThread {
   name: string;
   /** 5 cells for levels 1-5. null means the thread doesn't apply at that level. */
@@ -52,6 +58,8 @@ export interface Assessment {
   maturityModel: Record<DomainKey, string[]>;
   scoringMatrix: Record<DomainKey, DomainScoringMatrix>;
   advancement: DomainAdvancement[];
+  /** 5 entries per domain (index 0 = level 1): foundation, actions, and goals. */
+  advancementDetail: Record<DomainKey, AdvancementDetail[]>;
 }
 
 export type Answers = Record<string, number>;
