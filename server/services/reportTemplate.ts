@@ -60,45 +60,35 @@ const SCORING_MATRIX: Record<string, MatrixDomain> = {
   governance: {
     domainLabel: 'Governance and Strategy',
     threads: [
-      { name: 'Organizational Alignment', cells: ['No governance consideration', 'RBAC and structure setup', 'CoP/CoE driving governance', 'Responsive governance policies', 'AI-based governance'] },
-      { name: 'Release Management', cells: ['No release process', 'Basic release management', 'Multi-team release pipelines', 'Policy-driven releases', 'Fully automated releases'] },
+      { name: 'Organizational Alignment', cells: ['Team-level, organic', 'RBAC and structure in place', 'CoP/CoE driving governance', 'Proactive, adaptive policies', 'AI-informed governance'] },
+      { name: 'Release Management', cells: ['Direct changes as needed', 'Version control, defined path', 'Multi-team pipelines', 'Policy-driven quality gates', 'Fully automated releases'] },
     ],
   },
   platform: {
     domainLabel: 'Platform',
     threads: [
-      { name: 'Architecture', cells: ['Single instance, no separation', 'Dev/prod separated', 'Production grade, optimized', 'Mission critical DR/multisite', 'AIOps-managed platform'] },
-      { name: 'Resilience', cells: ['No HA or DR', 'Basic separation only', 'Offsite resiliency', 'Tested DR, drift enforcement', 'Self-healing, predictive'] },
+      { name: 'Architecture', cells: ['Single shared instance', 'Dev/prod separated', 'Production grade, optimized', 'DR/multisite tested', 'AIOps-managed platform'] },
+      { name: 'Resilience', cells: ['Single environment', 'Separation in place', 'Offsite resiliency', 'Tested DR, drift enforcement', 'Self-healing, predictive'] },
     ],
   },
   devopsSkills: {
     domainLabel: 'DevEx, OpsEx and Skills',
     threads: [
-      { name: 'Developer Experience', cells: ['Not considered', 'Repo templates, basic pipelines', 'Centralized dev environments', 'AI code assistance, config as code', 'AI-managed DevEx/OpsEx'] },
-      { name: 'Team Onboarding', cells: ['No formal onboarding', 'Basic training resources', 'Structured onboarding programs', 'Certification paths, AI learning', 'Self-sustaining expertise'] },
+      { name: 'Developer Experience', cells: ['Self-managed environments', 'Repo templates, basic pipelines', 'Centralized dev environments', 'AI code assistance, config as code', 'AI-managed DevEx/OpsEx'] },
+      { name: 'Team Onboarding', cells: ['Peer-based learning', 'Basic training resources', 'Structured onboarding programs', 'Certification paths, AI learning', 'Self-sustaining expertise'] },
     ],
   },
   useCases: {
     domainLabel: 'Use Cases',
     threads: [
-      { name: 'Scope', cells: ['Individual tasks', 'Single-area automation', 'Enterprise-wide, ITSM connected', 'Event-driven, business outcomes', 'AI-driven self-healing'] },
-      { name: 'Intelligence', cells: ['Manual trigger only', 'Basic event/schedule triggers', 'Cross-domain, self-service', 'EDA, measurable outcomes', 'Autonomous, predictive'] },
+      { name: 'Scope', cells: ['Individual tasks and scripts', 'Single-domain automation', 'Enterprise-wide, ITSM connected', 'Event-driven, business outcomes', 'AI-driven self-healing'] },
+      { name: 'Intelligence', cells: ['On-demand, manual trigger', 'Event/schedule triggers', 'Cross-domain, self-service', 'EDA, measurable outcomes', 'Autonomous, predictive'] },
     ],
   },
 };
 
 function getHighlightedColumns(score: number): Set<number> {
-  const floor = Math.floor(score);
-  const ceil = Math.ceil(score);
-  const frac = score - floor;
-
-  if (floor === ceil || frac < 0.3) {
-    return new Set([Math.max(0, Math.round(score) - 1)]);
-  }
-  if (frac > 0.7) {
-    return new Set([Math.max(0, ceil - 1)]);
-  }
-  return new Set([Math.max(0, floor - 1), Math.min(4, ceil - 1)]);
+  return new Set([Math.max(0, Math.floor(score) - 1)]);
 }
 
 function buildScoringMatrixHtml(domainScores: DomainResult[]): string {
