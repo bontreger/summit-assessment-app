@@ -134,6 +134,37 @@ export const automationMaturity: Assessment = {
     },
   ],
 
+  maturityModel: {
+    governance: [
+      'Team-Level Governance',
+      'Basic Governance',
+      'Proactive Governance',
+      'Advanced Governance',
+      'Fully Automated Governance',
+    ],
+    platform: [
+      'Basic Platform Implementation',
+      'Separated Environments',
+      'Production Grade Platform',
+      'Mission Critical Platform',
+      'Automated Platform Management',
+    ],
+    devopsSkills: [
+      'Self-Managed Environments',
+      'Basic Dev Lifecycle',
+      'Platform and Dev Onboarding',
+      'SDLC for Automation Content',
+      'Optimized Developer Experience',
+    ],
+    useCases: [
+      'Automation Building Blocks',
+      'Isolated Use Cases',
+      'Enterprise-Wide Automation',
+      'Event-Driven Operations',
+      'Next-Gen Automation',
+    ],
+  },
+
   scoringMatrix: {
     governance: {
       domainLabel: 'Governance and Strategy',

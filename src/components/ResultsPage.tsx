@@ -2,14 +2,8 @@ import { useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
   Button,
-  Card,
-  CardBody,
-  CardTitle,
-  Content,
-  ContentVariants,
   EmptyState,
   EmptyStateBody,
-  Label,
   Modal,
   ModalBody,
   ModalHeader,
@@ -31,21 +25,16 @@ import { useAssessment } from '../context/AssessmentContext';
 import { useSettings } from '../context/SettingsContext';
 import {
   computeDomainScores,
-  getAdvancementGuidance,
   isAssessmentComplete,
+  getMaturityLabel,
 } from '../utils/scoring';
 import { EmailReportModal } from './EmailReportModal';
 import { buildReportHtml } from '../utils/reportTemplate';
+import type { DomainKey } from '../types';
 
 ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend);
 
-const MATURITY_COLORS: Record<string, string> = {
-  Initial: '#c9190b',
-  Developing: '#f0ab00',
-  Operational: '#06c',
-  Optimizing: '#5752d1',
-  Innovator: '#3e8635',
-};
+const LEVEL_LABELS = ['Initial', 'Developing', 'Operational', 'Optimizing', 'Innovator'];
 
 export function ResultsPage() {
   const { assessmentId } = useParams<{ assessmentId: string }>();
@@ -141,40 +130,57 @@ export function ResultsPage() {
 
       <PageSection>
         <Title headingLevel="h2" size="xl" style={{ marginBottom: '1rem' }}>
-          Domain Scores
+          Automation Maturity Model
         </Title>
-        <div className="domain-card-grid">
+        <div className="maturity-grid">
+          {/* Domain rows */}
           {domainScores.map((ds) => {
-            const guidance = getAdvancementGuidance(assessment, ds.domain, ds.score);
+            const currentLevel = Math.max(1, Math.floor(ds.score));
+            const nextLevel = currentLevel < 5 ? currentLevel + 1 : null;
+            const labels = assessment.maturityModel[ds.domain as DomainKey] ?? [];
             return (
-              <Card key={ds.domain} isCompact>
-                <CardTitle style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  {ds.label}
-                  <Label
-                    style={{ backgroundColor: MATURITY_COLORS[ds.maturityLevel] ?? '#6a6e73', color: '#fff' }}
-                  >
-                    {ds.score} / 5 &mdash; {ds.maturityLevel}
-                  </Label>
-                </CardTitle>
-                <CardBody>
-                  {guidance && (
-                    <>
-                      <Content component={ContentVariants.p} style={{ fontWeight: 600, marginBottom: '0.25rem' }}>
-                        Next: {guidance.label}
-                      </Content>
-                      <ul style={{ margin: 0, paddingLeft: '1.25rem' }}>
-                        {guidance.actions.map((action, i) => (
-                          <li key={i} style={{ fontSize: '0.875rem', marginBottom: '0.25rem' }}>
-                            {action}
-                          </li>
-                        ))}
-                      </ul>
-                    </>
-                  )}
-                </CardBody>
-              </Card>
+              <div key={ds.domain} className="maturity-row">
+                <div className="maturity-domain-label">
+                  <span className="maturity-domain-name">{ds.label}</span>
+                  <span className="maturity-domain-score">{ds.score} / 5</span>
+                </div>
+                {labels.map((cellLabel, i) => {
+                  const level = i + 1;
+                  let cellClass = 'maturity-cell';
+                  if (level === currentLevel) cellClass += ' maturity-cell--current';
+                  else if (level === nextLevel) cellClass += ' maturity-cell--next';
+                  return (
+                    <div key={level} className={cellClass}>
+                      {cellLabel}
+                    </div>
+                  );
+                })}
+              </div>
             );
           })}
+
+          {/* Level labels row */}
+          <div className="maturity-row maturity-row--footer">
+            <div className="maturity-domain-label" />
+            {LEVEL_LABELS.map((label, i) => (
+              <div key={i} className="maturity-level-label">
+                <strong>{i + 1}</strong>
+                <span>{label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Legend */}
+        <div className="maturity-legend">
+          <span className="maturity-legend-item">
+            <span className="maturity-legend-swatch maturity-legend-swatch--current" />
+            Current State
+          </span>
+          <span className="maturity-legend-item">
+            <span className="maturity-legend-swatch maturity-legend-swatch--next" />
+            Next Focus
+          </span>
         </div>
       </PageSection>
 

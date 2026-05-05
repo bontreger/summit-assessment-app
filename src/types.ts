@@ -48,6 +48,8 @@ export interface Assessment {
   description: string;
   domains: DomainMeta[];
   questions: Question[];
+  /** One concise label per domain per maturity level (5 entries, index 0 = level 1). */
+  maturityModel: Record<DomainKey, string[]>;
   scoringMatrix: Record<DomainKey, DomainScoringMatrix>;
   advancement: DomainAdvancement[];
 }

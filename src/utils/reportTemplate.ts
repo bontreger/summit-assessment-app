@@ -44,91 +44,77 @@ const LEVEL_COLORS: Record<string, string> = {
   Innovator: '#3e8635',
 };
 
-const LEVEL_HEADERS = ['1', '2', '3', '4', '5'];
+const LEVEL_LABELS = ['Initial', 'Developing', 'Operational', 'Optimizing', 'Innovator'];
 
-interface MatrixThread {
-  name: string;
-  cells: (string | null)[];
-}
-
-interface MatrixDomain {
-  domainLabel: string;
-  threads: MatrixThread[];
-}
-
-const SCORING_MATRIX: Record<string, MatrixDomain> = {
+const MATURITY_MODEL: Record<string, { label: string; levels: string[] }> = {
   governance: {
-    domainLabel: 'Governance and Strategy',
-    threads: [
-      { name: 'Organizational Alignment', cells: ['Team-level, organic', 'RBAC and structure in place', 'CoP/CoE driving governance', 'Proactive, adaptive policies', 'AI-informed governance'] },
-      { name: 'Release Management', cells: ['Direct changes as needed', 'Version control, defined path', 'Multi-team pipelines', 'Policy-driven quality gates', 'Fully automated releases'] },
-    ],
+    label: 'Governance',
+    levels: ['Team-Level Governance', 'Basic Governance', 'Proactive Governance', 'Advanced Governance', 'Fully Automated Governance'],
   },
   platform: {
-    domainLabel: 'Platform',
-    threads: [
-      { name: 'Architecture', cells: ['Single shared instance', 'Dev/prod separated', 'Production grade, optimized', 'DR/multisite tested', 'AIOps-managed platform'] },
-      { name: 'Resilience', cells: ['Single environment', 'Separation in place', 'Offsite resiliency', 'Tested DR, drift enforcement', 'Self-healing, predictive'] },
-    ],
+    label: 'Platform',
+    levels: ['Basic Platform Implementation', 'Separated Environments', 'Production Grade Platform', 'Mission Critical Platform', 'Automated Platform Management'],
   },
   devopsSkills: {
-    domainLabel: 'DevEx, OpsEx and Skills',
-    threads: [
-      { name: 'Developer Experience', cells: ['Self-managed environments', 'Repo templates, basic pipelines', 'Centralized dev environments', 'AI code assistance, config as code', 'AI-managed DevEx/OpsEx'] },
-      { name: 'Team Onboarding', cells: ['Peer-based learning', 'Basic training resources', 'Structured onboarding programs', 'Certification paths, AI learning', 'Self-sustaining expertise'] },
-    ],
+    label: 'Dev Exp',
+    levels: ['Self-Managed Environments', 'Basic Dev Lifecycle', 'Platform and Dev Onboarding', 'SDLC for Automation Content', 'Optimized Developer Experience'],
   },
   useCases: {
-    domainLabel: 'Use Cases',
-    threads: [
-      { name: 'Scope', cells: ['Individual tasks and scripts', 'Single-domain automation', 'Enterprise-wide, ITSM connected', 'Event-driven, business outcomes', 'AI-driven self-healing'] },
-      { name: 'Intelligence', cells: ['On-demand, manual trigger', 'Event/schedule triggers', 'Cross-domain, self-service', 'EDA, measurable outcomes', 'Autonomous, predictive'] },
-    ],
+    label: 'Use Cases',
+    levels: ['Automation Building Blocks', 'Isolated Use Cases', 'Enterprise-Wide Automation', 'Event-Driven Operations', 'Next-Gen Automation'],
   },
 };
 
-function getHighlightedColumns(score: number): Set<number> {
-  return new Set([Math.max(0, Math.floor(score) - 1)]);
-}
+function buildMaturityModelHtml(domainScores: DomainResult[]): string {
+  const cellBase = 'padding:10px 6px;text-align:center;font-size:12px;line-height:1.3;border-radius:4px;font-weight:500';
+  const defaultCell = `${cellBase};background:#f0f0f0;color:#6a6e73`;
+  const currentCell = `${cellBase};background:#06c;color:#fff;font-weight:600`;
+  const nextCell = `${cellBase};background:#f0ab00;color:#151515;font-weight:600`;
 
-function buildScoringMatrixHtml(domainScores: DomainResult[]): string {
-  const highlightStyle = 'background:#e6f0ff;border:2px solid #4d9aff';
-  const emptyStyle = 'color:#999;font-style:italic';
+  const rows = domainScores.map((ds) => {
+    const model = MATURITY_MODEL[ds.domain];
+    if (!model) return '';
 
-  return domainScores.map((ds) => {
-    const matrix = SCORING_MATRIX[ds.domain];
-    if (!matrix) return '';
+    const currentLevel = Math.max(1, Math.floor(ds.score));
+    const nextLevel = currentLevel < 5 ? currentLevel + 1 : null;
 
-    const highlighted = getHighlightedColumns(ds.score);
-    const hasThreadNames = matrix.threads.some((t) => t.name);
-
-    const headerCells = LEVEL_HEADERS.map((h, i) =>
-      `<th style="padding:8px;border:1px solid #ddd;text-align:left;font-weight:600;background:#f0f0f0;${highlighted.has(i) ? highlightStyle : ''}">${h}</th>`
-    ).join('');
-
-    const threadNameHeader = hasThreadNames ? '<th style="padding:8px;border:1px solid #ddd;background:#f0f0f0"></th>' : '';
-
-    const bodyRows = matrix.threads.map((thread) => {
-      const nameCell = hasThreadNames
-        ? `<td style="padding:8px;border:1px solid #ddd;font-weight:600;white-space:nowrap">${thread.name}</td>`
-        : '';
-      const dataCells = thread.cells.map((cell, ci) => {
-        const hl = highlighted.has(ci) ? highlightStyle : '';
-        if (cell == null) {
-          return `<td style="padding:8px;border:1px solid #ddd;${emptyStyle};${hl}">&mdash;</td>`;
-        }
-        return `<td style="padding:8px;border:1px solid #ddd;${hl}">${cell}</td>`;
-      }).join('');
-      return `<tr>${nameCell}${dataCells}</tr>`;
+    const cells = model.levels.map((cellLabel, i) => {
+      const level = i + 1;
+      let style = defaultCell;
+      if (level === currentLevel) style = currentCell;
+      else if (level === nextLevel) style = nextCell;
+      return `<td style="${style}">${cellLabel}</td>`;
     }).join('');
 
-    return `
-    <h3 style="margin:20px 0 8px">${matrix.domainLabel} &mdash; ${ds.score} / 5</h3>
-    <table style="width:100%;border-collapse:collapse;font-size:13px;margin-bottom:16px">
-      <thead><tr>${threadNameHeader}${headerCells}</tr></thead>
-      <tbody>${bodyRows}</tbody>
-    </table>`;
+    return `<tr>
+      <td style="padding:8px 12px;font-weight:600;font-size:13px;white-space:nowrap;vertical-align:middle">
+        ${model.label}<br><span style="font-weight:400;font-size:11px;color:#6a6e73">${ds.score} / 5</span>
+      </td>
+      ${cells}
+    </tr>`;
   }).join('');
+
+  const levelHeaderCells = LEVEL_LABELS.map((label, i) =>
+    `<th style="padding:6px 4px;text-align:center;font-size:11px;color:#6a6e73;font-weight:400;border-top:1px solid #ddd">
+      <strong style="font-size:13px;color:#333">${i + 1}</strong><br>${label}
+    </th>`
+  ).join('');
+
+  return `
+  <table style="width:100%;border-collapse:separate;border-spacing:4px;margin:12px 0">
+    <tbody>
+      ${rows}
+      <tr>
+        <td></td>
+        ${levelHeaderCells}
+      </tr>
+    </tbody>
+  </table>
+  <p style="font-size:12px;color:#555;text-align:center;margin-top:8px">
+    <span style="display:inline-block;width:12px;height:12px;background:#06c;border-radius:2px;vertical-align:middle;margin-right:4px"></span> Current State
+    &nbsp;&nbsp;&nbsp;
+    <span style="display:inline-block;width:12px;height:12px;background:#f0ab00;border-radius:2px;vertical-align:middle;margin-right:4px"></span> Next Focus
+  </p>`;
 }
 
 export function buildReportHtml(
@@ -160,7 +146,7 @@ export function buildReportHtml(
     })
     .join('');
 
-  const matrixHtml = buildScoringMatrixHtml(domainScores);
+  const maturityModelHtml = buildMaturityModelHtml(domainScores);
 
   return `
 <!DOCTYPE html>
@@ -175,7 +161,10 @@ export function buildReportHtml(
 
   <h1 style="color:#151515;border-bottom:3px solid #06c;padding-bottom:12px">${title}</h1>
 
-  <h2 style="margin-top:24px">Your Domain Scores</h2>
+  <h2 style="margin-top:24px">Automation Maturity Model</h2>
+  ${maturityModelHtml}
+
+  <h2 style="margin-top:32px">Domain Scores &amp; Next Steps</h2>
   <table style="width:100%;border-collapse:collapse;margin:12px 0">
     <thead>
       <tr style="background:#f0f0f0">
@@ -187,12 +176,6 @@ export function buildReportHtml(
     </thead>
     <tbody>${scoreRows}</tbody>
   </table>
-
-  <h2 style="margin-top:32px">Key Indicators by Maturity Level</h2>
-  <p style="font-size:14px;color:#555">
-    The highlighted column(s) indicate where your organization currently stands for each domain.
-  </p>
-  ${matrixHtml}
 
   <hr style="margin:32px 0;border:none;border-top:1px solid #ddd">
   <p style="font-size:12px;color:#888">
