@@ -4,3 +4,4 @@ dist-server/
 .env
 *.local
 .env.production
+lambda.py
