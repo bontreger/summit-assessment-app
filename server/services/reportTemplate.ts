@@ -5,42 +5,33 @@ interface DomainResult {
   maturityLevel: string;
 }
 
-const ADVANCEMENT: Record<string, Record<string, string[]>> = {
-  governance: {
-    Initial: ['Establish RBAC configuration for automation platform', 'Define basic automation organizational structure', 'Document initial release management process'],
-    Developing: ['Stand up a Community of Practice or Center of Excellence', 'Implement multi-team release pipelines', 'Streamline automation hub usage across teams'],
-    Operational: ['Develop responsive automation governance policies', 'Integrate governance with organizational change management', 'Automate policy compliance checks in release pipelines'],
-    Optimizing: ['Implement AI-based governance policy recommendations', 'Automate release validation and deployment', 'Establish continuous governance optimization'],
-    Innovator: ['Continuously refine AI governance models', 'Share governance best practices across the industry', 'Drive innovation in automated policy management'],
-  },
-  platform: {
-    Initial: ['Separate dev and prod environments', 'Plan for initial platform sizing', 'Establish basic backup procedures'],
-    Developing: ['Optimize production sizing and HA configuration', 'Implement offsite resiliency', 'Enable advanced platform features'],
-    Operational: ['Implement and test DR/multisite deployment', 'Enforce configuration consistency across environments', 'Establish automated drift detection'],
-    Optimizing: ['Deploy AIOps for platform management', 'Implement automated policy enforcement', 'Enable predictive failure analysis'],
-    Innovator: ['Continuously optimize AIOps models', 'Drive self-healing platform capabilities', 'Pioneer automated platform lifecycle management'],
-  },
-  devopsSkills: {
-    Initial: ['Create repository templates for automation content', 'Establish basic quality gate pipelines', 'Develop initial onboarding materials'],
-    Developing: ['Expand pipelines with test automation', 'Stand up centralized developer environments', 'Launch structured team onboarding programs'],
-    Operational: ['Implement OpsEx configuration as code', 'Integrate AI code assistance into developer tooling', 'Formalize certification paths for automation engineers'],
-    Optimizing: ['Deploy AI-driven DevEx and OpsEx management', 'Automate content lifecycle testing and deployment', 'Establish self-sustaining expertise programs'],
-    Innovator: ['Continuously refine AI-driven developer experience', 'Contribute to industry automation practices', 'Drive innovation in automated skills development'],
-  },
-  useCases: {
-    Initial: ['Identify automation use cases within a single domain', 'Implement foundational automation for a specific area', 'Document use case patterns for reuse'],
-    Developing: ['Connect automation use cases to ITSM and service catalogs', 'Expand automation across multiple enterprise domains', 'Implement self-service automation portals'],
-    Operational: ['Deploy Event-Driven Ansible for automated operations', 'Connect automation to measurable business outcomes', 'Implement cross-domain event response patterns'],
-    Optimizing: ['Implement AI-driven use cases for self-managed infrastructure', 'Deploy self-healing automation patterns', 'Establish predictive remediation workflows'],
-    Innovator: ['Continuously expand AI-driven autonomous operations', 'Pioneer next-generation automation patterns', 'Drive industry standards for intelligent automation'],
-  },
+const LOGO_URL = 'https://bontreger.github.io/summit-assessment-app/Logo-Red_Hat-Services-A-Standard-RGB.svg';
+const LOGO_REVERSE_URL = 'https://bontreger.github.io/summit-assessment-app/Logo-Red_Hat-Services-A-Reverse-RGB.svg';
+
+const RH = {
+  red50: '#ee0000',
+  gray10: '#f2f2f2',
+  gray20: '#e0e0e0',
+  gray30: '#c7c7c7',
+  gray50: '#707070',
+  gray60: '#4d4d4d',
+  gray95: '#151515',
+  white: '#ffffff',
+  blue: '#0066cc',
+  blueLight: '#73bcf7',
+  orange40: '#f5921b',
+  purple50: '#5e40be',
+  teal60: '#147878',
 };
+
+const FONT_DISPLAY = "'Red Hat Display', Arial, Helvetica, sans-serif";
+const FONT_TEXT = "'Red Hat Text', Arial, Helvetica, sans-serif";
 
 const LEVEL_COLORS: Record<string, string> = {
   Initial: '#c9190b',
   Developing: '#f0ab00',
-  Operational: '#06c',
-  Optimizing: '#5752d1',
+  Operational: RH.blue,
+  Optimizing: RH.purple50,
   Innovator: '#3e8635',
 };
 
@@ -48,7 +39,7 @@ const LEVEL_LABELS = ['Initial', 'Developing', 'Operational', 'Optimizing', 'Inn
 
 const MATURITY_MODEL: Record<string, { label: string; levels: string[] }> = {
   governance: {
-    label: 'Governance',
+    label: 'Governance & Strategy',
     levels: ['Team-Level Governance', 'Basic Governance', 'Proactive Governance', 'Advanced Governance', 'Fully Automated Governance'],
   },
   platform: {
@@ -56,7 +47,7 @@ const MATURITY_MODEL: Record<string, { label: string; levels: string[] }> = {
     levels: ['Basic Platform Implementation', 'Separated Environments', 'Production Grade Platform', 'Mission Critical Platform', 'Automated Platform Management'],
   },
   devopsSkills: {
-    label: 'Dev Exp',
+    label: 'DevEx, OpsEx & Skills',
     levels: ['Self-Managed Environments', 'Basic Dev Lifecycle', 'Platform and Dev Onboarding', 'SDLC for Automation Content', 'Optimized Developer Experience'],
   },
   useCases: {
@@ -65,11 +56,24 @@ const MATURITY_MODEL: Record<string, { label: string; levels: string[] }> = {
   },
 };
 
+function buildSectionHeader(text: string): string {
+  return `
+  <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="margin:32px 0 16px">
+    <tr>
+      <td style="padding-bottom:8px;border-bottom:2px solid ${RH.red50}">
+        <span style="font-family:${FONT_DISPLAY};font-size:18px;font-weight:700;color:${RH.gray95}">
+          ${text}
+        </span>
+      </td>
+    </tr>
+  </table>`;
+}
+
 function buildMaturityModelHtml(domainScores: DomainResult[]): string {
-  const cellBase = 'padding:10px 6px;text-align:center;font-size:12px;line-height:1.3;border-radius:4px;font-weight:500';
-  const defaultCell = `${cellBase};background:#f0f0f0;color:#6a6e73`;
-  const currentCell = `${cellBase};background:#06c;color:#fff;font-weight:600`;
-  const nextCell = `${cellBase};background:#f0ab00;color:#151515;font-weight:600`;
+  const cellBase = `font-family:${FONT_TEXT};padding:10px 6px;text-align:center;font-size:12px;line-height:1.3;font-weight:500`;
+  const defaultCell = `${cellBase};background:${RH.gray10};color:${RH.gray50}`;
+  const currentCell = `${cellBase};background:${RH.blue};color:${RH.white};font-weight:700`;
+  const nextCell = `${cellBase};background:${RH.orange40};color:${RH.white};font-weight:700`;
 
   const rows = domainScores.map((ds) => {
     const model = MATURITY_MODEL[ds.domain];
@@ -87,16 +91,16 @@ function buildMaturityModelHtml(domainScores: DomainResult[]): string {
     }).join('');
 
     return `<tr>
-      <td style="padding:8px 12px;font-weight:600;font-size:13px;white-space:nowrap;vertical-align:middle">
-        ${model.label}<br><span style="font-weight:400;font-size:11px;color:#6a6e73">${ds.score} / 5</span>
+      <td style="padding:8px 12px;font-weight:700;font-size:13px;white-space:nowrap;vertical-align:middle;font-family:${FONT_TEXT}">
+        ${model.label}<br><span style="font-weight:400;font-size:11px;color:${RH.gray50}">${ds.score} / 5</span>
       </td>
       ${cells}
     </tr>`;
   }).join('');
 
   const levelHeaderCells = LEVEL_LABELS.map((label, i) =>
-    `<th style="padding:6px 4px;text-align:center;font-size:11px;color:#6a6e73;font-weight:400;border-top:1px solid #ddd">
-      <strong style="font-size:13px;color:#333">${i + 1}</strong><br>${label}
+    `<th style="padding:6px 4px;text-align:center;font-size:11px;color:${RH.gray50};font-weight:400;border-top:1px solid ${RH.gray20};font-family:${FONT_TEXT}">
+      <strong style="font-size:13px;color:${RH.gray60}">${i + 1}</strong><br>${label}
     </th>`
   ).join('');
 
@@ -110,11 +114,15 @@ function buildMaturityModelHtml(domainScores: DomainResult[]): string {
       </tr>
     </tbody>
   </table>
-  <p style="font-size:12px;color:#555;text-align:center;margin-top:8px">
-    <span style="display:inline-block;width:12px;height:12px;background:#06c;border-radius:2px;vertical-align:middle;margin-right:4px"></span> Current State
-    &nbsp;&nbsp;&nbsp;
-    <span style="display:inline-block;width:12px;height:12px;background:#f0ab00;border-radius:2px;vertical-align:middle;margin-right:4px"></span> Next Focus
-  </p>`;
+  <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="margin-top:8px">
+    <tr>
+      <td align="center" style="font-family:${FONT_TEXT};font-size:12px;color:${RH.gray50}">
+        <span style="display:inline-block;width:12px;height:12px;background:${RH.blue};border-radius:2px;vertical-align:middle;margin-right:4px"></span> Current State
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <span style="display:inline-block;width:12px;height:12px;background:${RH.orange40};border-radius:2px;vertical-align:middle;margin-right:4px"></span> Next Focus
+      </td>
+    </tr>
+  </table>`;
 }
 
 const ADVANCEMENT_DETAIL: Record<string, { foundation: string; actions: string[]; goals: string }[]> = {
@@ -152,16 +160,19 @@ export function buildReportHtml(
   title: string,
   domainScores: DomainResult[],
 ): string {
+  const thStyle = `padding:10px 14px;font-family:${FONT_TEXT};font-size:13px;font-weight:700;color:${RH.gray95};border-bottom:2px solid ${RH.gray20};text-align:left`;
+  const tdStyle = `padding:10px 14px;font-family:${FONT_TEXT};font-size:13px;border-bottom:1px solid ${RH.gray10};color:${RH.gray95}`;
+
   const scoreRows = domainScores
     .map((ds) => {
-      const color = LEVEL_COLORS[ds.maturityLevel] || '#6a6e73';
+      const color = LEVEL_COLORS[ds.maturityLevel] || RH.gray50;
       return `
       <tr>
-        <td style="padding:10px 12px;border:1px solid #ddd;font-weight:600">${ds.label}</td>
-        <td style="padding:10px 12px;border:1px solid #ddd;text-align:center">
-          <span style="display:inline-block;background:${color};color:#fff;padding:4px 12px;border-radius:4px;font-weight:600">${ds.score} / 5</span>
+        <td style="${tdStyle};font-weight:600">${ds.label}</td>
+        <td style="${tdStyle};text-align:center">
+          <span style="display:inline-block;background:${color};color:${RH.white};padding:3px 12px;border-radius:3px;font-weight:700;font-size:13px">${ds.score} / 5</span>
         </td>
-        <td style="padding:10px 12px;border:1px solid #ddd">${ds.maturityLevel}</td>
+        <td style="${tdStyle}">${ds.maturityLevel}</td>
       </tr>`;
     })
     .join('');
@@ -171,65 +182,123 @@ export function buildReportHtml(
       const levelIdx = Math.max(0, Math.floor(ds.score) - 1);
       const detail = ADVANCEMENT_DETAIL[ds.domain]?.[levelIdx];
       if (!detail) return '';
-      const actionList = `<ul style="margin:4px 0 0 16px;padding:0">${detail.actions.map((a) => `<li style="font-size:13px">${a}</li>`).join('')}</ul>`;
+      const actionList = `<ul style="margin:4px 0 0 16px;padding:0">${detail.actions.map((a) => `<li style="font-family:${FONT_TEXT};font-size:13px;color:${RH.gray95};padding:2px 0">${a}</li>`).join('')}</ul>`;
       return `
       <tr>
-        <td style="padding:12px;border:1px solid #ddd;font-weight:600;white-space:nowrap;vertical-align:top">${ds.label}</td>
-        <td style="padding:12px;border:1px solid #ddd;vertical-align:top;font-size:13px">${detail.foundation}</td>
-        <td style="padding:12px;border:1px solid #ddd;vertical-align:top">${actionList}</td>
-        <td style="padding:12px;border:1px solid #ddd;vertical-align:top;font-style:italic;color:#555;font-size:13px">${detail.goals}</td>
+        <td style="${tdStyle};font-weight:600;white-space:nowrap;vertical-align:top">${ds.label}</td>
+        <td style="${tdStyle};vertical-align:top;font-size:13px">${detail.foundation}</td>
+        <td style="${tdStyle};vertical-align:top">${actionList}</td>
+        <td style="${tdStyle};vertical-align:top;font-style:italic;color:${RH.gray50};font-size:13px">${detail.goals}</td>
       </tr>`;
     })
     .join('');
 
   const maturityModelHtml = buildMaturityModelHtml(domainScores);
 
-  return `
-<!DOCTYPE html>
+  return `<!DOCTYPE html>
 <html>
-<head><meta charset="utf-8"></head>
-<body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#333;max-width:720px;margin:0 auto;padding:20px">
-  <p style="font-size:15px;line-height:1.6;color:#333;margin-bottom:24px">
-    Thank you for connecting with us at <strong>Red Hat Summit</strong>! If you have questions about your results
-    or are interested in improving your automation adoption maturity, our consulting team would love to help.
-    <a href="https://www.redhat.com/en/services/consulting" style="color:#06c;text-decoration:none;font-weight:600">Contact Red Hat Consulting &rarr;</a>
-  </p>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500;700&family=Red+Hat+Text:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body style="margin:0;padding:0;background:${RH.gray10};-webkit-text-size-adjust:100%">
 
-  <h1 style="color:#151515;border-bottom:3px solid #06c;padding-bottom:12px">${title}</h1>
+  <!--[if mso]><table width="680" cellpadding="0" cellspacing="0" align="center" role="presentation"><tr><td><![endif]-->
 
-  <h2 style="margin-top:24px">Automation Maturity Model</h2>
-  ${maturityModelHtml}
+  <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="background:${RH.gray10}">
+    <tr><td align="center" style="padding:32px 16px">
 
-  <h2 style="margin-top:32px">Domain Scores</h2>
-  <table style="width:100%;border-collapse:collapse;margin:12px 0">
-    <thead>
-      <tr style="background:#f0f0f0">
-        <th style="padding:10px;border:1px solid #ddd;text-align:left">Domain</th>
-        <th style="padding:10px;border:1px solid #ddd;text-align:center">Score</th>
-        <th style="padding:10px;border:1px solid #ddd;text-align:left">Level</th>
-      </tr>
-    </thead>
-    <tbody>${scoreRows}</tbody>
+      <table width="680" cellpadding="0" cellspacing="0" role="presentation" style="background:${RH.white};max-width:680px;width:100%;border-radius:3px;overflow:hidden;box-shadow:0 2px 4px rgba(21,21,21,0.12)">
+
+        <!-- ====== RED ACCENT BAR ====== -->
+        <tr><td style="height:4px;background:${RH.red50};font-size:0;line-height:0">&nbsp;</td></tr>
+
+        <!-- ====== HEADER BANNER ====== -->
+        <tr><td style="padding:28px 32px;background:${RH.white};border-bottom:1px solid ${RH.gray20}">
+          <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
+            <tr>
+              <td style="vertical-align:middle;width:220px">
+                <img src="${LOGO_URL}" alt="Red Hat Services" style="height:36px;width:auto;display:block">
+              </td>
+              <td style="text-align:right;vertical-align:middle">
+                <span style="font-family:${FONT_DISPLAY};font-size:20px;font-weight:700;color:${RH.gray95};line-height:1.2">
+                  Red Hat Summit
+                </span><br>
+                <span style="font-family:${FONT_DISPLAY};font-size:16px;font-weight:500;color:${RH.gray60};line-height:1.4">
+                  Automation Assessment Report
+                </span>
+              </td>
+            </tr>
+          </table>
+        </td></tr>
+
+        <!-- ====== BODY CONTENT ====== -->
+        <tr><td style="padding:32px;font-family:${FONT_TEXT};font-size:14px;line-height:1.6;color:${RH.gray95}">
+
+          <!-- Intro -->
+          <p style="margin:0 0 28px;font-size:15px;color:${RH.gray60};line-height:1.7">
+            Thank you for connecting with us at <strong style="color:${RH.gray95}">Red Hat Summit</strong>!
+            If you have questions about your results or are interested in improving your automation adoption maturity,
+            our consulting team would love to help.<br><br>
+            <a href="https://www.redhat.com/en/services/consulting" style="color:${RH.blue};text-decoration:none;font-weight:700">Contact Red Hat Consulting &rarr;</a>
+          </p>
+
+          <!-- Section: Maturity Model -->
+          ${buildSectionHeader('Automation Maturity Model')}
+          ${maturityModelHtml}
+
+          <!-- Section: Domain Scores -->
+          ${buildSectionHeader('Domain Scores')}
+          <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="margin:12px 0">
+            <thead>
+              <tr>
+                <th style="${thStyle}">Domain</th>
+                <th style="${thStyle};text-align:center">Score</th>
+                <th style="${thStyle}">Level</th>
+              </tr>
+            </thead>
+            <tbody>${scoreRows}</tbody>
+          </table>
+
+          <!-- Section: Advancement Roadmap -->
+          ${buildSectionHeader('Advancement Roadmap')}
+          <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="margin:12px 0">
+            <thead>
+              <tr>
+                <th style="${thStyle}">Domain</th>
+                <th style="${thStyle}">Verify Your Foundation</th>
+                <th style="${thStyle}">Advancement Actions</th>
+                <th style="${thStyle}">Future Goals</th>
+              </tr>
+            </thead>
+            <tbody>${advancementRows}</tbody>
+          </table>
+
+        </td></tr>
+
+        <!-- ====== FOOTER ====== -->
+        <tr><td style="padding:24px 32px;background:${RH.gray95}">
+          <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
+            <tr>
+              <td style="vertical-align:middle">
+                <img src="${LOGO_REVERSE_URL}" alt="Red Hat" style="height:28px;width:auto;display:block">
+              </td>
+              <td style="text-align:right;vertical-align:middle;font-family:${FONT_TEXT};font-size:12px;color:${RH.gray30};line-height:1.5">
+                Generated by Red Hat Services Assessments<br>
+                <a href="https://www.redhat.com/en/services/consulting" style="color:${RH.blueLight};text-decoration:none">Schedule a deeper assessment &rarr;</a>
+              </td>
+            </tr>
+          </table>
+        </td></tr>
+
+      </table>
+
+    </td></tr>
   </table>
 
-  <h2 style="margin-top:32px">Advancement Roadmap</h2>
-  <table style="width:100%;border-collapse:collapse;margin:12px 0">
-    <thead>
-      <tr style="background:#f0f0f0">
-        <th style="padding:10px;border:1px solid #ddd;text-align:left">Domain</th>
-        <th style="padding:10px;border:1px solid #ddd;text-align:left">Verify Your Foundation</th>
-        <th style="padding:10px;border:1px solid #ddd;text-align:left">Advancement Actions</th>
-        <th style="padding:10px;border:1px solid #ddd;text-align:left">Future Goals</th>
-      </tr>
-    </thead>
-    <tbody>${advancementRows}</tbody>
-  </table>
+  <!--[if mso]></td></tr></table><![endif]-->
 
-  <hr style="margin:32px 0;border:none;border-top:1px solid #ddd">
-  <p style="font-size:12px;color:#888">
-    This report was generated by the Services Assessments application.
-    For questions or to schedule a deeper assessment, contact your Red Hat account team.
-  </p>
 </body>
 </html>`;
 }
