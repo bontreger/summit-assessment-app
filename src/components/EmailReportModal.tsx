@@ -12,6 +12,7 @@ import {
   TextInput,
 } from '@patternfly/react-core';
 import type { Answers, Assessment, DomainScore } from '../types';
+import { buildReportHtml } from '../utils/reportTemplate';
 
 interface EmailReportModalProps {
   isOpen: boolean;
@@ -40,21 +41,23 @@ export function EmailReportModal({
     setErrorMsg('');
 
     try {
-      const res = await fetch('/api/send-report', {
+      const html = buildReportHtml(assessment.title, domainScores);
+      const endpoint = import.meta.env.VITE_EMAIL_API_URL;
+      if (!endpoint) throw new Error('Email service is not configured');
+
+      const res = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          email,
-          assessmentId: assessment.id,
-          assessmentTitle: assessment.title,
-          answers,
-          domainScores,
+          to: email,
+          subject: `${assessment.title} — Your Results`,
+          html,
         }),
       });
 
       if (!res.ok) {
         const body = await res.json().catch(() => ({}));
-        throw new Error(body.error ?? `Server returned ${res.status}`);
+        throw new Error(body.error ?? body.message ?? `Server returned ${res.status}`);
       }
 
       setStatus('success');
